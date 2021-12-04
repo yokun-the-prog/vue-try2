@@ -155,23 +155,10 @@ class SpotController extends AppBaseController
 
 
     // ゲストユーザー用
-    public function guest_index(Request $request)
+    public function read()
     {
-        $spots = $this->spotRepository->all();
-        return view('guest/spots.index')->with('spots', $spots);
-    }
-
-    public function guest_show($id)
-    {
-        $spot = $this->spotRepository->find($id);
-
-        if (empty($spot)) {
-            Flash::error('Spot not found');
-
-            return redirect(route('guest/spots.show'));
-        }
-
-        return view('guest/spots.show')->with('spot', $spot);
+        $data = $this->spotRepository->all();
+        return $data;
     }
 
 

@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Middleware;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,10 +42,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'],function(){
 // 利用画面
 Route::group(['prefix' => 'guest', 'middleware' => 'auth'],function(){
     // メニュー画面表示
+    
     Route::get('/', [App\Http\Controllers\HomeController::class, 'guest_index'])->name('guest.index');
-    Route::get('/spots', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
+    // Route::get('/spots', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
 
-    Route::get('/tours', [App\Http\Controllers\TourController::class, 'guest_index'])->name('guest/tours.index');
+    // Route::get('/tours', [App\Http\Controllers\TourController::class, 'guest_index'])->name('guest/tours.index');
 
 
 

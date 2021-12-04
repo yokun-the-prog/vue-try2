@@ -153,4 +153,12 @@ class TagController extends AppBaseController
 
         return redirect(route('tags.index'));
     }
+
+        // ゲストユーザー用
+    public function read()
+    {
+        $data = $this->tagRepository->all();
+        return $data;
+    }
+    
 }
