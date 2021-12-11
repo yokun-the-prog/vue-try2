@@ -2,16 +2,18 @@
     <table class="table" id="spots-table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Tel</th>
-            <th>Standard Term</th>
+            <th>ID</th>
+            <th>名前</th>
+            <th>住所</th>
+            <th>TEL</th>
+            <th>目安観光時間</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
         <tbody>
         @foreach($spots as $spot)
             <tr>
+                <td>{{ $spot->id }}</td>
                 <td>{{ $spot->name }}</td>
                 <td>{{ $spot->address }}</td>
                 <td>{{ $spot->tel }}</td>

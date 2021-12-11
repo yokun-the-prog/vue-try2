@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('admin/layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Spot Tags</h1>
+                    <h1>観光スポットへのタグ紐付け管理</h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
@@ -25,7 +25,7 @@
 
         <div class="card">
             <div class="card-body p-0">
-                @include('spot_tags.table')
+                @include('admin/spot_tags.table')
 
                 <div class="card-footer clearfix">
                     <div class="float-right">

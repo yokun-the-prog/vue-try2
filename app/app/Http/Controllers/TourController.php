@@ -31,7 +31,7 @@ class TourController extends AppBaseController
     {
         $tours = $this->tourRepository->all();
 
-        return view('tours.index')
+        return view('admin/tours.index')
             ->with('tours', $tours);
     }
 
@@ -42,7 +42,7 @@ class TourController extends AppBaseController
      */
     public function create()
     {
-        return view('plans.index');
+        return view('admin/tours.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class TourController extends AppBaseController
             return redirect(route('tours.index'));
         }
 
-        return view('tours.show')->with('tour', $tour);
+        return view('admin/tours.show')->with('tour', $tour);
     }
 
     /**
@@ -100,7 +100,7 @@ class TourController extends AppBaseController
             return redirect(route('tours.index'));
         }
 
-        return view('tours.edit')->with('tour', $tour);
+        return view('admin/tours.edit')->with('tour', $tour);
     }
 
     /**

@@ -35,6 +35,7 @@ class TagsTableSeeder extends Seeder
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
         ]);
+        
         // tagsテーブルに情報をインサート.
         DB::table('tags')->insert([
             'name' => '入場料無料',

@@ -7,11 +7,15 @@ import Vuetify from 'vuetify'; //★
 import axios from 'axios';
 import 'vuetify/dist/vuetify.min.css'; //★
 import '@mdi/font/css/materialdesignicons.css'; //★
+import store from './store';
+
 
 Vue.component('app-component', require('./components/App.vue').default);
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 Vue.prototype.$axios = axios;
+
+
 
 export default new Vuetify({
     icons: {
@@ -21,8 +25,6 @@ export default new Vuetify({
         dark: false,
     }
 })
-
-
 
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
@@ -49,13 +51,19 @@ const router = new VueRouter({
             name: 'board',
             component: () => import('./components/board/Board.vue'),
         },
+        {
+            path: '/backtohome',
+            name: 'back',
+            //component: () => import('./components/board/Board.vue'),
+        },
     ]
 });
 
 const app = new Vue({
     el: '#app',
     router,
-    vuetify: new Vuetify(), //★
+    store,
+    vuetify: new Vuetify(), 
 });
 
 

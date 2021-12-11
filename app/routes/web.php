@@ -3,6 +3,7 @@
 use App\Http\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,40 +40,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'],function(){
 });
 
 
+
+
 // 利用画面
-Route::group(['prefix' => 'guest', 'middleware' => 'auth'],function(){
-    // メニュー画面表示
+//Route::group(['prefix' => 'guest', 'middleware' => 'auth'],function(){
+Route::group(['middleware' => 'auth'],function(){
+        // メニュー画面表示
     
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'guest_index'])->name('guest.index');
-    // Route::get('/spots', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
-
-    // Route::get('/tours', [App\Http\Controllers\TourController::class, 'guest_index'])->name('guest/tours.index');
-
-
-
-
-    // 見どころ紹介用
-    // Route::group(['prefix' => 'spots'],function(){
-    //     Route::get('/', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
-        // Route::get('/show/{spot_id}', [App\Http\Controllers\SpotController::class, 'show'])->name('guest/spots.show');
-        // Route::get('/edit/{spot_id}', [App\Http\Controllers\SpotController::class, 'show'])->name('guest/spots.show');
-        // Route::get('post/edit/{post_id}', 'PostController@edit')->name('post.edit');
+    Route::get('guest', [App\Http\Controllers\HomeController::class, 'guest_index'])->name('guest.index');
+    // Route::get('logout', function(){
 
     // });
 
+    
+    // Route::get('/spots', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
 
-
-    // 旅の計画用
-    //Route::get();
-
-
-    // 旅の履歴用
-    //Route::get();
-
-
-    // 掲示板用
-    //Route::get();
-
+    // Route::get('/tours', [App\Http\Controllers\TourController::class, 'guest_index'])->name('guest/tours.index');
 
 
 

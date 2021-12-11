@@ -1,19 +1,19 @@
 <template>
+    <!-- v-model="drawer" -->
+    <!-- expand-on-hover -->
     
   <v-navigation-drawer
-    v-model="drawer"
     app
   >
     <v-sheet
       color="grey lighten-4"
       class="pa-4"
     >
-      <v-avatar
-        class="mb-4"
-        color="grey darken-1"
-        size="64"
-      ></v-avatar>
-
+      <v-avatar color="indigo">
+        <v-icon dark>
+          mdi-account-circle
+        </v-icon>
+      </v-avatar>
       <div>john@vuetifyjs.com</div>
     </v-sheet>
 
@@ -44,10 +44,10 @@ export default {
   data: () => ({
     drawer: "",
     links: [
-      ["mdi-inbox-arrow-down", "見どころ紹介", "/spot"],
-      ["mdi-send", "旅の計画", "/plan"],
-      ["mdi-delete", "旅の履歴", "/history"],
-      ["mdi-alert-octagon", "口コミ投稿", "/board"],
+      ["mdi-map-marker-outline", "見どころ紹介", "/spot"],
+      ["mdi-chart-timeline-variant", "旅の計画", "/plan"],
+      ["mdi-folder", "旅の履歴", "/history"],
+      ["mdi-comment-processing", "口コミ投稿（作成中）", "/board"],
     ],
   }),
 };

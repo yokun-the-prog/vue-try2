@@ -24,8 +24,8 @@
                 active-class="primary--text"
             >
                 <v-chip
-                    v-for="tag in tags"
-                    :key="tag.name"
+                    v-for="tag in $store.state.tags"
+                    v-bind:key="tag.name"
                 >
                     {{ tag.name }}
                 </v-chip>
@@ -34,7 +34,7 @@
         
         <v-col
             class="grey lighten-5"
-            v-for="spot in spots"
+            v-for="spot in $store.state.spots"
             v-bind:key="spot.name"
         >
             <v-card
@@ -68,21 +68,18 @@
 export default {
     data() {
         return {
-            tags:[],
-            spots:[],
             message: "",
+            load: null,
+            loadLabel: null,
+            loading: null,
         };
     },
     methods: {
         tagRead() {
-            axios.get("/api/tag").then((res) => {
-                this.tags = res.data;
-            });
+            this.$store.commit('tagRead');
         },
         spotRead() {
-            axios.get("/api/spot").then((res) => {
-                this.spots = res.data;
-            });
+            this.$store.commit('spotRead');
         },
     },
     mounted() {

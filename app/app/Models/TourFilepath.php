@@ -5,6 +5,8 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tour;
+
 
 /**
  * Class TourFilepath
@@ -59,5 +61,9 @@ class TourFilepath extends Model
         'photorally_path' => 'nullable'
     ];
 
+
+    public function tour(){
+        return $this -> hasOne(Tour::class);
+    } 
     
 }

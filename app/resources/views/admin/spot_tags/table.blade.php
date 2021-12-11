@@ -2,16 +2,16 @@
     <table class="table" id="spotTags-table">
         <thead>
         <tr>
-            <th>Spot Id</th>
-        <th>Tag Id</th>
+            <th>観光地名</th>
+            <th>タグ</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
         <tbody>
         @foreach($spotTags as $spotTag)
             <tr>
-                <td>{{ $spotTag->spot_id }}</td>
-            <td>{{ $spotTag->tag_id }}</td>
+                <td>{{ $spotTag->spot->name }}</td>
+                <td>{{ $spotTag->tag->name }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['spotTags.destroy', $spotTag->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

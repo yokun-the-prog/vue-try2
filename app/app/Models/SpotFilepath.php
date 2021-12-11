@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Spot;
 
 /**
  * Class SpotFilepath
@@ -35,7 +36,6 @@ class SpotFilepath extends Model
         'highlight_path',
         'route_path',
         'photorally_path',
-        'title'
     ];
 
     /**
@@ -47,7 +47,6 @@ class SpotFilepath extends Model
         'highlight_path' => 'string',
         'route_path' => 'string',
         'photorally_path' => 'string',
-        'title' => 'string'
     ];
 
     /**
@@ -60,8 +59,10 @@ class SpotFilepath extends Model
         'highlight_path' => 'nullable',
         'route_path' => 'nullable',
         'photorally_path' => 'nullable',
-        'title' => 'required'
     ];
 
+    public function spot(){
+        return $this -> hasOne(Spot::class);
+    } 
     
 }

@@ -31,7 +31,7 @@ class TagController extends AppBaseController
     {
         $tags = $this->tagRepository->all();
 
-        return view('tags.index')
+        return view('admin/tags.index')
             ->with('tags', $tags);
     }
 
@@ -42,7 +42,7 @@ class TagController extends AppBaseController
      */
     public function create()
     {
-        return view('tags.create');
+        return view('admin/tags.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class TagController extends AppBaseController
             return redirect(route('tags.index'));
         }
 
-        return view('tags.show')->with('tag', $tag);
+        return view('admin/tags.show')->with('tag', $tag);
     }
 
     /**
@@ -100,7 +100,7 @@ class TagController extends AppBaseController
             return redirect(route('tags.index'));
         }
 
-        return view('tags.edit')->with('tag', $tag);
+        return view('admin/tags.edit')->with('tag', $tag);
     }
 
     /**

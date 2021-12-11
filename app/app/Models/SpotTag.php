@@ -5,6 +5,9 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Spot;
+use App\Models\Tag;
+
 
 /**
  * Class SpotTag
@@ -51,5 +54,11 @@ class SpotTag extends Model
         'tag_id' => 'required|numeric'
     ];
 
-    
+    public function spot(){
+        return $this -> belongsTo(Spot::class);
+    } 
+
+    public function tag(){
+        return $this -> belongsTo(Tag::class);
+    } 
 }

@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('admin/layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tag Details</h1>
+                    <h1>タグ詳細</h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
@@ -21,7 +21,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('tags.show_fields')
+                    @include('admin/tags.show_fields')
                 </div>
             </div>
         </div>

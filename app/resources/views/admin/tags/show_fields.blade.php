@@ -1,6 +1,6 @@
 <!-- Name Field -->
 <div class="col-sm-12">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'タグ名:') !!}
     <p>{{ $tag->name }}</p>
 </div>
 

@@ -5,6 +5,8 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Destination;
+
 
 /**
  * Class ErratumDivision
@@ -48,5 +50,8 @@ class ErratumDivision extends Model
         'name' => 'required'
     ];
 
+    public function destination(){
+        return $this -> hasOne(Destination::class);
+    } 
     
 }

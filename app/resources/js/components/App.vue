@@ -1,13 +1,14 @@
 <template>
   <v-app id="inspire">
     <v-system-bar app>
-      <!-- <v-spacer></v-spacer> -->
+      <v-spacer></v-spacer>
 
-      <!-- <v-icon>mdi-square</v-icon>
-
-      <v-icon>mdi-circle</v-icon>
-
-      <v-icon>mdi-triangle</v-icon> -->
+      <v-list-item>
+        <!-- <v-list-item-icon> -->
+         <a :href="link_home">HOMEへ戻る</a>
+        <!-- </v-list-item-icon> -->
+      </v-list-item>
+      
     </v-system-bar>
 
     <!-- メニューコンポーネント -->
@@ -26,8 +27,10 @@ import Contents from './Contents.vue';
 
 
 export default {
+  props:['BackToHome'],
   data: () => ({
     drawer: null,
+    link_home: "/",
   }),
   components:{
       Menu,

@@ -5,6 +5,10 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Destination;
+use App\Models\SpotFilepath;
+use App\Models\SpotTag;
+
 
 /**
  * Class Spot
@@ -62,5 +66,17 @@ class Spot extends Model
         'standard_term' => 'required'
     ];
 
+    public function destination(){
+        return $this -> hasMany(Destination::class);
+    }
     
+    public function spot_filepath(){
+        return $this -> hasOne(SpotFilepath::class);
+    }
+
+    public function spot_tag(){
+        return $this -> hasMany(SpotTag::class);
+    }
+
+
 }

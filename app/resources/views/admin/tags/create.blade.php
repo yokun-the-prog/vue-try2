@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('admin/layouts.app')
 
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Create Tag</h1>
+                    <h1>タグ追加</h1>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('tags.fields')
+                    @include('admin/tags.fields')
                 </div>
 
             </div>

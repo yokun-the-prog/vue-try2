@@ -19,7 +19,7 @@ class CreateToursTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('photorally_division_id')->constrained();
             $table->foreignId('transport_division_id')->constrained();
-            $table->time('schedule');
+            $table->date('schedule');
             $table->string('departure_spot', 250);
             $table->time('departure_at');
             $table->string('return_spot', 250);

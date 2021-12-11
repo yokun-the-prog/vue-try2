@@ -5,6 +5,8 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\SpotTag;
+
 
 /**
  * Class Tag
@@ -48,5 +50,8 @@ class Tag extends Model
         'name' => 'required'
     ];
 
+    public function spot_tag(){
+        return $this -> hasMany(SpotTag::class);
+    }
     
 }

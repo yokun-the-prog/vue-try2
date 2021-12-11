@@ -2,13 +2,15 @@
     <table class="table" id="tags-table">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>タグID</th>
+            <th>タグ名</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
         <tbody>
         @foreach($tags as $tag)
             <tr>
+                <td>{{ $tag->id }}</td>
                 <td>{{ $tag->name }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'delete']) !!}

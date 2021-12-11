@@ -31,7 +31,7 @@ class SpotTagController extends AppBaseController
     {
         $spotTags = $this->spotTagRepository->all();
 
-        return view('spot_tags.index')
+        return view('admin/spot_tags.index')
             ->with('spotTags', $spotTags);
     }
 
@@ -42,7 +42,7 @@ class SpotTagController extends AppBaseController
      */
     public function create()
     {
-        return view('spot_tags.create');
+        return view('admin/spot_tags.create');
     }
 
     /**
@@ -80,7 +80,7 @@ class SpotTagController extends AppBaseController
             return redirect(route('spotTags.index'));
         }
 
-        return view('spot_tags.show')->with('spotTag', $spotTag);
+        return view('admin/spot_tags.show')->with('spotTag', $spotTag);
     }
 
     /**
@@ -100,7 +100,7 @@ class SpotTagController extends AppBaseController
             return redirect(route('spotTags.index'));
         }
 
-        return view('spot_tags.edit')->with('spotTag', $spotTag);
+        return view('admin/spot_tags.edit')->with('spotTag', $spotTag);
     }
 
     /**

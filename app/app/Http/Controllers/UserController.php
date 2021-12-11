@@ -36,6 +36,12 @@ class UserController extends AppBaseController
             ->with('users', $users);
     }
 
+    public function create()
+    {
+        return view('admin/users.create');
+    }
+
+
 
     /**
      * Display the specified User.

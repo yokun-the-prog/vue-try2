@@ -5,6 +5,12 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\TransportDivision;
+use App\Models\PhotorallyDivision;
+use App\Models\TourFilepath;
+use App\Models\Destination;
+
 
 /**
  * Class Tour
@@ -68,6 +74,26 @@ class Tour extends Model
         'return_spot' => 'required',
         'return_at' => 'required'
     ];
+
+    public function user(){
+        return $this -> belongsTo(User::class);
+    } 
+
+    public function transport_division(){
+        return $this -> belongsTo(TransportDivision::class);
+    } 
+
+    public function photorally_division(){
+        return $this -> belongsTo(PhotorallyDivision::class);
+    } 
+
+    public function tour_filepaths(){
+        return $this -> hasOne(TourFilepath::class);
+    } 
+
+    public function destinations(){
+        return $this -> hasMany(Destination::class);
+    } 
 
 
 }

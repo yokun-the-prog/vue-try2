@@ -18,7 +18,6 @@ class SpotFilepathRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'spot_id',
-        'title'
     ];
 
     /**

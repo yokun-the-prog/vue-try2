@@ -20,7 +20,6 @@ class CreateSpotFilepathsTable extends Migration
             $table->string('highlight_path', 250);
             $table->string('route_path', 250);
             $table->string('photorally_path', 250);
-            $table->string('title', 250);
             $table->timestamps();
             $table->softDeletes();
         });

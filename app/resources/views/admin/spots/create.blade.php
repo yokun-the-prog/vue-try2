@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1>Create Spot</h1>
+                    <h1>観光スポット追加</h1>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Saveaa', ['class' => 'btn btn-primary']) !!}
+                {!! Form::submit('保存', ['class' => 'btn btn-primary']) !!}
                 <a href="{{ route('spots.index') }}" class="btn btn-default">Cancel</a>
             </div>
 

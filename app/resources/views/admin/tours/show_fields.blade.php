@@ -1,50 +1,52 @@
-<!-- User Id Field -->
+<!-- User Name Field -->
 <div class="col-sm-12">
-    {!! Form::label('user_id', 'User Id:') !!}
-    <p>{{ $tour->user_id }}</p>
-</div>
-
-<!-- Photorally Division Id Field -->
-<div class="col-sm-12">
-    {!! Form::label('photorally_division_id', 'Photorally Division Id:') !!}
-    <p>{{ $tour->photorally_division_id }}</p>
-</div>
-
-<!-- Transport Division Id Field -->
-<div class="col-sm-12">
-    {!! Form::label('transport_division_id', 'Transport Division Id:') !!}
-    <p>{{ $tour->transport_division_id }}</p>
+    {!! Form::label('user_name', 'ユーザー名:') !!}
+    <p>{{ $tour->user->name }}</p>
 </div>
 
 <!-- Schedule Field -->
 <div class="col-sm-12">
-    {!! Form::label('schedule', 'Schedule:') !!}
+    {!! Form::label('schedule', '観光計画日:') !!}
     <p>{{ $tour->schedule }}</p>
 </div>
 
 <!-- Departure Spot Field -->
 <div class="col-sm-12">
-    {!! Form::label('departure_spot', 'Departure Spot:') !!}
+    {!! Form::label('departure_spot', '出発地:') !!}
     <p>{{ $tour->departure_spot }}</p>
 </div>
 
 <!-- Departure At Field -->
 <div class="col-sm-12">
-    {!! Form::label('departure_at', 'Departure At:') !!}
+    {!! Form::label('departure_at', '出発時間:') !!}
     <p>{{ $tour->departure_at }}</p>
 </div>
 
 <!-- Return Spot Field -->
 <div class="col-sm-12">
-    {!! Form::label('return_spot', 'Return Spot:') !!}
+    {!! Form::label('return_spot', '帰宅地:') !!}
     <p>{{ $tour->return_spot }}</p>
 </div>
 
 <!-- Return At Field -->
 <div class="col-sm-12">
-    {!! Form::label('return_at', 'Return At:') !!}
+    {!! Form::label('return_at', '帰宅時間:') !!}
     <p>{{ $tour->return_at }}</p>
 </div>
+
+
+<!-- Photorally Division Id Field -->
+<div class="col-sm-12">
+    {!! Form::label('photorally_division', 'フォトラリー実施有無:') !!}
+    <p>{{ $tour->photorally_division->name }}</p>
+</div>
+
+<!-- Transport Division Id Field -->
+<div class="col-sm-12">
+    {!! Form::label('transport_division', '交通手段:') !!}
+    <p>{{ $tour->transport_division->name }}</p>
+</div>
+
 
 <!-- Created At Field -->
 <div class="col-sm-12">

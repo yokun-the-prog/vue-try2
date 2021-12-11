@@ -14,15 +14,14 @@
         <v-btn
             color="primary"
             elevation="2"
-            v-on:click="resultContainer = true"
+            v-on:click="$store.state.planCreateFlag = true"
         >結果表示
         </v-btn>
 
         <!-- 検索結果コンポーネント -->
-        <template v-if="resultContainer">
+        <template v-if="$store.state.planCreateFlag">
             <v-container
                 mb-3
-                v-if="resultContainer"
             >
                 <v-btn
                     color="primary"
@@ -50,16 +49,12 @@ export default {
     },
     data() {
         return {
-            resultContainer: false,
-            spots: [],
-        };
+            resultContainer: false
+        }
     },
     methods: {
         spotRead() {
-            axios.get("/api/spot").then((res) => {
-                this.spots = res.data;
-                console.log(this.spots);
-            });
+            this.$store.commit('spotRead');
         },
     },
     mounted() {

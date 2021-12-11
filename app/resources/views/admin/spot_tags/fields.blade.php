@@ -4,6 +4,7 @@
     {!! Form::text('spot_id', null, ['class' => 'form-control']) !!}
 </div>
 
+
 <!-- Tag Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('tag_id', 'Tag Id:') !!}

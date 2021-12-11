@@ -5,6 +5,10 @@ namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tour;
+use App\Models\Spot;
+use App\Models\ErratumDivision;
+
 
 /**
  * Class Destination
@@ -61,5 +65,16 @@ class Destination extends Model
         'photorally_location' => 'required'
     ];
 
+    public function tour(){
+        return $this -> belongsTo(Tour::class);
+    } 
+
+    public function spot(){
+        return $this -> belongsTo(Spot::class);
+    } 
+
+    public function erratum_division(){
+        return $this -> hasOne(ErratumDivision::class);
+    } 
     
 }
