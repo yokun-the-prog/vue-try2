@@ -7,19 +7,35 @@ export default new Vuex.Store({
   state: {
     tags: [],
     spots: [],
+    routes: [],
     planCreateFlag: '',
+    
+    
+    schedule: "",//(parseISO(new Date().toISOString()), 'yyyy-MM-dd'),
+    departureSpot: "豊橋駅",
+    returnSpot: "二川駅",
+    departureTime: "6:30",
+    returnTime: "18:30",
+    timeToGoHome: "12:00",
+    userInformation: [],
+
 
   },
   mutations: {
-    tagRead(state) {
-      axios.get("/api/tag").then((res) => {
-          state.tags = res.data;
-      });
+    readTags(state, payload) {
+      state.tags = payload;
     },
-    spotRead(state) {
-      axios.get("/api/spot").then((res) => {
-          state.spots = res.data;
-      });
+    readSpots(state, payload) {
+      state.spots = payload;
+    },
+    saveRoutes(state, payload) {
+      console.log('payload');
+      console.log(payload);
+      state.routes = payload;
+    },
+    saveUserInfo(state, payload) {
+      console.log('ユーザー情報更新中');
+      state.userInformation = payload;
     },
   },
   // getters:{
@@ -30,6 +46,16 @@ export default new Vuex.Store({
   // },
 
   actions: {
+    readTags(context){
+      axios.get("/api/tag").then((res) => {
+        context.commit('readTags', res.data);
+      })
+    },
+    readSpots(context){
+      axios.get("/api/spot").then((res) => {
+        context.commit('readSpots', res.data);
+      })
+    },
 
 
   },

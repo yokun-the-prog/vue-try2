@@ -177,4 +177,21 @@ class TourController extends AppBaseController
         return view('guest/tours.show')->with('tour', $spot);
     }
 
+
+
+    public function guest_store(CreateTourRequest $request)
+    {
+        $input = $request->all();
+
+        $tour = $this->tourRepository->create($input);
+        return $tour->id;
+
+        // Flash::success('Tour saved successfully.');
+        
+    }
+
+
+
+
+
 }

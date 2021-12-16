@@ -21,7 +21,7 @@ class CreateDestinationsTable extends Migration
             $table->foreignId('erratum_division_id')->constrained();
             $table->time('arrive_at');
             $table->time('departure_at');
-            $table->string('photorally_location', 250);
+            $table->string('photorally_location', 250)->default('111-111-111');
             $table->timestamps();
             $table->softDeletes();
         });

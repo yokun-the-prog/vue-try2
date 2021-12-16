@@ -26,7 +26,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>そうだ、南知多に行こう。</title>
+        <title>そうだ、南知多行こう。</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -50,7 +50,7 @@
                 <nav class="left-nav">
                     <ul>
                         <li><a href= "#service">サービスコンテンツ</a></li>
-                        <li><a href= "#using">サービスの使い方</a></li>
+                        <!-- <li><a href= "#using">サービスの使い方</a></li> -->
                         <li><a href="{{ url('/start') }}" class="">サービスを使う</a></li>
                     </ul>
                 </nav>
@@ -67,22 +67,34 @@
                         @auth 
                             <nav class="right-nav">
                                 <ul>
-                                    <li><a href="{{ route('guest.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">サービス利用ページへ</a></li>
-                                    <li><a href="" class="text-sm text-gray-700 dark:text-gray-500 underline">お問い合わせ（作成中）</a></li>
+                                    <li><a href="{{ route('guest.index') }}">サービス利用ページへ</a></li>
+                                    <li>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            ログアウト
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+<!--                                                                      
+                                    
+                                    <li><a href="{{ route('logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログアウト</a></li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    </form> -->
                                 </ul>
                             </nav>
                         @else
                             <nav class="right-nav">
                                 <ul>
-                                    <li><a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a></li>
+                                    <li><a href="{{ route('login') }}">ログイン</a></li>
                                     @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">会員登録</a>
+                                        <a href="{{ route('register') }}">会員登録</a>
                                     @endif       
-                                    <li><a href="" class="text-sm text-gray-700 dark:text-gray-500 underline">お問い合わせ（作成中）</a></li>
+                                    <!-- <li><a href="" class="text-sm text-gray-700 dark:text-gray-500 underline">お問い合わせ（作成中）</a></li> -->
                                 </ul>
                             </nav>
                         @endauth
-                        <a href="{{ route('admin.index') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">管理者画面</a>
+                        <a href="{{ route('admin.index') }}"">管理者画面</a>
                     </div>
                 @endif
                 </div>
@@ -98,6 +110,11 @@
                 </div>
             </div>
 
+            <div class=button-back>
+                <a class="button" href="{{ url('/using') }}">サービスを使う</a>
+    
+            </div>
+
             <div class="contents-back" id="service">
     
                 <div class="heading">
@@ -111,43 +128,43 @@
                         <h3>南知多町見どころ紹介</h3>
                         <p>南知多町を代表する名所を</p>
                         <p>写真付きで紹介。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                     <div class="item">
                         <h3>旅の計画</h3>
                         <p>旅の開始/終了予定時刻等、</p>
                         <p>設定した条件から旅程を自動で作成します。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                     <div class="item">
                         <h3>フォトラリー機能</h3>
                         <p>フォトラリー機能を備えており、ゲーム感覚で</p>
                         <p>南知多町を観光することができます。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                     <div class="item">
                         <h3>旅の思い出</h3>
                         <p>旅程を写真付きで保存、PDFへの出力が可能。</p>
                         <p>SNSへ、"旅の思い出"として共有することができます。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                     <div class="item">
                         <h3>口コミサイト機能</h3>
                         <p>口コミ機能を備えており、あなたの旅の思い出を</p>
                         <p>他ユーザーにお知らせすることができます。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                     <div class="item">
                         <h3>ダウンロード機能</h3>
                         <p>作成した旅程はPDFとしてダウンロード</p>
                         <p>が可能。絵日記としても思い出に残せます。</p>
-                        <img src="./../images/miena.png" alt="">
+                        <!-- <img src="./../images/miena.png" alt=""> -->
                     </div>
                 </div>
     
             </div>
     
-            <div class="how-to-use-back" id="using">
+            <!-- <div class="how-to-use-back" id="using">
                 <div class="heading">
                     <h2>How to USE</h2>
                     <p>サービスの使い方一例</p>
@@ -172,11 +189,7 @@
                     </div>
     
                 </div>
-            </div>
-            <div class=button-back>
-                <a class="button" href="{{ url('/using') }}">サービスを使う</a>
-    
-            </div>
+            </div> -->
     
             <footer>
                 <div class="upper-footer">

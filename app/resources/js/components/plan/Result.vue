@@ -5,50 +5,101 @@
 
         <v-row>
             <!-- 左半分 -->
-            <v-col cols=6>
+            <!-- 出発地 -->
+            <v-col cols=12>
+                <v-card
+                    class="card"
+                    elevation="3"
+                    outlined
+                > 
+                    <v-row>   
+                        <!-- <v-col cols=2>
+                            <br>
+                        </v-col> -->
+                        
+                        <!-- データの枠組み -->
+                        <v-col>
+                            <v-card-subtitle class="text-center">{{this.$store.state.departureTime}}出発</v-card-subtitle>
+                            <p class="text-h5 text-center">
+                                  {{this.$store.state.departureSpot}}
+                            </p>
+                        </v-col>
+                    </v-row>
+                </v-card>
+            </v-col>
+
+            <!-- 作成したルートをv-forで表示 -->
 
 
-                <!-- コンテンツ毎の枠組み forで回す-->
-                <v-row
-                    v-for="n in 3"
-                    v-bind:key="n"
+
+            <v-timeline>
+                <v-timeline-item
+
+                    v-for="(route, index) in $store.state.routes"
+                    v-bind:key="route.name"
                 >
+                    <v-card
+                        class="card"
+                        elevation="3"
+                        outlined
+                    >
+                    <v-row>
+                        <v-col cols=2 class="ml-2 mt-2 pb-0">
+                            No.{{index+1}}
+                        </v-col>
+                        <v-col class="ml-2 mt-2 pb-0">
+                            {{route.arrive_at}} ~ {{route.departure_at}}
+                        </v-col>
 
-                    <v-card> 
-                        <v-row>   
-                            <!-- idと交通手段 -->
-                            <v-col cols=3>
-                                01 <br>
-                                <v-icon
-                                    large
-                                    color="blue darken-2"
-                                >
-                                    mdi-train
-                                </v-icon>
-                            </v-col>
-                            
-                            <!-- データの枠組み -->
-                            <v-col cols=8>
-                                09:00　発  <br>
-                                自宅  <br>
-                                住所： <br>
-                                電話番号：  <br>
-                                タグ： <br>
-                            </v-col>
-                        </v-row>
+                    </v-row>
+                    <v-divider class="mx-2"></v-divider>
+                    <v-row>
+
+                        <v-col class="mx-2">
+                            <!-- <v-row> -->
+                                <v-card-title>{{ route.name }}</v-card-title>
+                                <v-card-subtitle>タグ:食事処</v-card-subtitle>
+                                <v-card-text>
+                                    <div>住所:{{ route.address }}</div>
+                                    <div>TEL:{{ route.tel }}</div>
+                                </v-card-text>
+
+                            <!-- </v-row> -->
+                        </v-col>
+
+                    </v-row>
                     </v-card>
+                
+                </v-timeline-item>
+            </v-timeline>
 
-                </v-row>
-        
+
+
+
+
+            <!-- 帰宅地 -->
+            <v-col cols=12>
+                <v-card
+                    class="card"
+                    elevation="3"
+                    outlined
+                > 
+                    <v-row>   
+                        <!-- データの枠組み -->
+                        <v-col>
+                            <v-card-subtitle class="text-center">{{this.$store.state.timeToGoHome}}到着</v-card-subtitle>
+                            <p class="text-h5 text-center">
+                                {{this.$store.state.returnSpot}}
+                            </p>
+                        </v-col>
+                    </v-row>
+                </v-card>
 
             </v-col>
 
             <!-- 右半分 -->
-
-            <v-col>
-
-
-            </v-col>
+            <!--     <v-col>
+            </v-col> -->
 
 
         </v-row>
@@ -65,22 +116,9 @@ export default {
 
     data() {
         return {
-            Domain: "http://localhost:8000/guest#/plan/",
-            BaseURL: "maps/api/directions/json",
-            BaseOrigin: "?origin=Disneyland",
-            BaseDestination: "&destination=Universal+Studios+Hollywood&key=",
-            destination: "",
-            GoogleMapApiKey: "AIzaSyDdIBbhkb1--3sVblCBJ43BXkgU5wEpRvc",
-            
-            destinations: [],
-            // durat: [],
-
-
             vehicle: "",
-            depSpot: "",
-            retSpot: "",
-            depTime: "",
-            retTime: "",
+            click: "",
+
         };
     },
     methods: {
@@ -91,14 +129,6 @@ export default {
             this.menu = false;
             return;
         },
-        // read(){
-        //     axios.get(this.url)
-        //     .then((response) => {
-        //         this.info = response.data;
-        //         console.log(this.url);
-        //         return;
-        //     });
-        // },
     },
     mounted(){
         

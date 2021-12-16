@@ -39,14 +39,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'],function(){
     Route::resource('/tourFilepaths', App\Http\Controllers\TourFilepathController::class);
 });
 
-
+// Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout', 'logout');
 
 
 // 利用画面
 //Route::group(['prefix' => 'guest', 'middleware' => 'auth'],function(){
 Route::group(['middleware' => 'auth'],function(){
         // メニュー画面表示
-    
+
     Route::get('guest', [App\Http\Controllers\HomeController::class, 'guest_index'])->name('guest.index');
     // Route::get('logout', function(){
 

@@ -1,22 +1,44 @@
 <template>
     <div class="planComponent">        
         <!-- 検索条件コンポーネント -->
-        <v-container mb-3>
-            <v-btn
-                color="primary"
-                elevation="2"
-            >検索条件</v-btn>
-        </v-container>
-        <v-container mb-3>
+
+            <v-toolbar
+                flat
+            >
+                <v-toolbar-title>新しい旅の計画{{$store.state.schedule}}</v-toolbar-title>
+                <v-divider
+                    class="mx-4"
+                    inset
+                    vertical
+                ></v-divider>
+                <v-spacer></v-spacer>
+
+
+                <v-dialog v-model="dialogDelete" max-width="500px">
+                    <v-card>
+                        <v-card-title class="text-h5">この旅を削除しますか？</v-card-title>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+                            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+                    
+            </v-toolbar>
+
+
+
+        <v-container mb-3 px-4>
             <Search />
         </v-container>
 
-        <v-btn
+        <!-- <v-btn
             color="primary"
             elevation="2"
-            v-on:click="$store.state.planCreateFlag = true"
         >結果表示
-        </v-btn>
+        </v-btn> -->
 
         <!-- 検索結果コンポーネント -->
         <template v-if="$store.state.planCreateFlag">
@@ -43,22 +65,27 @@
 import Search from './Search.vue';
 import Result from './Result.vue';
 export default {
+    data() {
+        return {
+            // 使わないが、画面遷移の間で参照できずエラーになるため変数として宣言しておく
+            dialogDelete: false,
+            closeDelete: false,
+            deleteItemConfirm: false,
+        }
+    },
     components: {
         Search,
         Result,
     },
-    data() {
-        return {
-            resultContainer: false
-        }
-    },
+
     methods: {
-        spotRead() {
-            this.$store.commit('spotRead');
+        readSpots: function() {
+            this.$store.dispatch('readSpots');
         },
+        
     },
     mounted() {
-        this.spotRead();
+        this.readSpots();
     },
 };
 

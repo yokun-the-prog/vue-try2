@@ -17,8 +17,8 @@ class CreateToursTable extends Migration
         Schema::create('tours', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('photorally_division_id')->constrained();
-            $table->foreignId('transport_division_id')->constrained();
+            $table->foreignId('photorally_division_id')->constrained()->default('1');
+            $table->foreignId('transport_division_id')->constrained()->default('1');
             $table->date('schedule');
             $table->string('departure_spot', 250);
             $table->time('departure_at');

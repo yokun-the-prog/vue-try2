@@ -9,12 +9,21 @@
       color="grey lighten-4"
       class="pa-4"
     >
-      <v-avatar color="indigo">
-        <v-icon dark>
-          mdi-account-circle
-        </v-icon>
-      </v-avatar>
-      <div>john@vuetifyjs.com</div>
+    <v-row>
+
+        <v-col cols=3>
+          <v-avatar color="indigo">
+            <v-icon dark>
+              mdi-account-circle
+            </v-icon>
+          </v-avatar>
+        </v-col>
+        <v-col cols=8>
+          <div><h5>{{this.$store.state.userInformation.name}}さん</h5></div>
+          <div>{{this.$store.state.userInformation.email}}</div>
+        </v-col>
+    </v-row>
+
     </v-sheet>
 
 

@@ -153,4 +153,20 @@ class DestinationController extends AppBaseController
 
         return redirect(route('destinations.index'));
     }
+
+
+    public function guest_store(CreateDestinationRequest $request)
+    {
+        $input = $request->all();
+
+        $destination = $this->destinationRepository->create($input);
+        return $destination->id;
+
+        // Flash::success('Destination saved successfully.');
+        
+    }
+
+
+
+
 }

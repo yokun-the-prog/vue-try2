@@ -65,7 +65,7 @@
 <!-- 観光スポットへのタグ紐付け用 -->
 <li class="nav-item">
     <a href="{{ route('spotTags.index') }}"
-    class="nav-link {{ Request::is('spotTags*') ? 'active' : '' }}">
+    class="nav-link {{ Request::is('admin/spotTags*') ? 'active' : '' }}">
     <p>観光地紐付きタグ</p>
 </a>    
 </li>    

@@ -8,6 +8,7 @@ import axios from 'axios';
 import 'vuetify/dist/vuetify.min.css'; //★
 import '@mdi/font/css/materialdesignicons.css'; //★
 import store from './store';
+// import auth from './auth';
 
 
 Vue.component('app-component', require('./components/App.vue').default);
@@ -30,6 +31,7 @@ const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 const router = new VueRouter({
+    // mode: 'history',
     routes: [
         {
             path: '/spot',
@@ -50,11 +52,6 @@ const router = new VueRouter({
             path: '/board',
             name: 'board',
             component: () => import('./components/board/Board.vue'),
-        },
-        {
-            path: '/backtohome',
-            name: 'back',
-            //component: () => import('./components/board/Board.vue'),
         },
     ]
 });

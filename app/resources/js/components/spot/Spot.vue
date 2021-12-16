@@ -1,12 +1,9 @@
 <template>
     <div class="spotComponent">
-        <v-container mb-3>
-            観光スポット一覧
-        </v-container>
-        
+
         <v-card>
-            <v-row>
-                <v-col>
+            <v-row class="mx-4 mb-1 pb-0">
+                <v-col cols=8>
                     <v-text-field
                         v-model="message"
                         label="目的地を入力してください"
@@ -17,19 +14,22 @@
                     <v-btn color="primary">検索</v-btn>
                 </v-col>
             </v-row>
-        </v-card>
-        <v-card>
-            <v-chip-group
-                multiple
-                active-class="primary--text"
-            >
-                <v-chip
-                    v-for="tag in $store.state.tags"
-                    v-bind:key="tag.name"
-                >
-                    {{ tag.name }}
-                </v-chip>
-            </v-chip-group>
+            <v-row class="ml-4 pt-0">
+                <v-col cols=1><p>タグ：</p></v-col>
+                <v-col cols=11>
+                    <v-chip-group
+                        multiple
+                        active-class="primary--text"
+                    >
+                        <v-chip
+                            v-for="tag in $store.state.tags"
+                            v-bind:key="tag.name"
+                        >
+                            {{ tag.name }}
+                        </v-chip>
+                    </v-chip-group>
+                </v-col>
+            </v-row>
         </v-card>
         
         <v-col
@@ -38,7 +38,6 @@
             v-bind:key="spot.name"
         >
             <v-card
-                :loading="loading"
                 class="card"
                 elevation="3"
                 outlined
@@ -49,9 +48,6 @@
                     <div>所在地：{{ spot.address }}</div>
                     <div>TEL：{{ spot.tel }}</div>
                 </v-card-text>
-                <v-card-actions>
-                    <v-btn @click="load" :disabled="loading" v-text="loadLabel"></v-btn>
-                </v-card-actions>
             </v-card>
 
         </v-col>
@@ -69,22 +65,19 @@ export default {
     data() {
         return {
             message: "",
-            load: null,
-            loadLabel: null,
-            loading: null,
         };
     },
     methods: {
-        tagRead() {
-            this.$store.commit('tagRead');
+        readTags: function() {
+            this.$store.dispatch('readTags','');
         },
-        spotRead() {
-            this.$store.commit('spotRead');
+        readSpots: function() {
+            this.$store.dispatch('readSpots','');
         },
     },
     mounted() {
-        this.tagRead();
-        this.spotRead();
+        this.readTags();
+        this.readSpots();
     },
 };
 </script>
