@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -8,8 +9,12 @@ export default new Vuex.Store({
     tags: [],
     spots: [],
     routes: [],
-    planCreateFlag: '',
+    tours: [],
+    spotTags: [],
     
+
+    planCreateFlag: '',
+    successShow:false,
     
     schedule: "",//(parseISO(new Date().toISOString()), 'yyyy-MM-dd'),
     departureSpot: "豊橋駅",
@@ -25,25 +30,22 @@ export default new Vuex.Store({
     readTags(state, payload) {
       state.tags = payload;
     },
+    readSpotTags(state, payload) {
+      state.spotTags = payload;
+    },
     readSpots(state, payload) {
       state.spots = payload;
     },
     saveRoutes(state, payload) {
-      console.log('payload');
-      console.log(payload);
       state.routes = payload;
     },
     saveUserInfo(state, payload) {
-      console.log('ユーザー情報更新中');
       state.userInformation = payload;
     },
+    readTours(state, payload){
+      state.tours = payload;
+    }
   },
-  // getters:{
-  //   averageTerm: state =>{
-  //     let sum = 0;
-  //     spots->standard_term
-  //   }
-  // },
 
   actions: {
     readTags(context){
@@ -51,13 +53,24 @@ export default new Vuex.Store({
         context.commit('readTags', res.data);
       })
     },
+    readSpotTags(context){
+      axios.get("/api/spotTag").then((res) => {
+        context.commit('readSpotTags', res.data);
+      })
+    },
     readSpots(context){
       axios.get("/api/spot").then((res) => {
         context.commit('readSpots', res.data);
       })
     },
-
-
+    readTours(context){
+      const params={
+        "user_id" :this.state.userInformation.id
+      };
+      axios.get("/api/tour",{params}).then((res) => {
+        context.commit('readTours', res.data);
+      })
+    }
   },
   modules: {
 

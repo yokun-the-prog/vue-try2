@@ -13,7 +13,7 @@ use Response;
 class DestinationController extends AppBaseController
 {
     /** @var  DestinationRepository */
-    private $destinationRepository;
+    public $destinationRepository;
 
     public function __construct(DestinationRepository $destinationRepo)
     {

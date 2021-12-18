@@ -38,6 +38,7 @@ class Spot extends Model
         'tel',
         'spot_location',
         'standard_term',
+        'photo_path',
     ];
 
     /**

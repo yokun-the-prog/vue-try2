@@ -9,6 +9,9 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Response;
+use \Illuminate\Support\Facades\Storage;
+use App\Models\Spot;
+use Illuminate\Support\Facades\Log;
 
 class SpotController extends AppBaseController
 {
@@ -54,6 +57,32 @@ class SpotController extends AppBaseController
     public function store(CreateSpotRequest $request)
     {
         $input = $request->all();
+        $image = $request->file("photo_path");
+
+        // 画像がアップロードされていれば、storageに保存。
+        // if($request->hasFile('photo_path')){
+        //     $path = \Strage::put('/public', $image);
+        //     $path = explode('/', $path);
+        // }else{
+        //     $path = null;
+        // }
+        //拡張子付きでファイル名を取得
+        $filenameWithExt = $image->getClientOriginalName();
+        echo $filenameWithExt;
+        //ファイル名のみを取得
+         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        echo $filename;
+
+        //拡張子を取得
+        $extension = $image->getClientOriginalExtension();
+        echo $extension;
+
+        //保存のファイル名を構築
+        $filenameToStore = $filename."_".time().".".$extension;
+
+
+        $path = $image->storeAs("storage/spot_paths", $filenameToStore);
+        // $path = \Strage::put('/public', $image);
 
         $spot = $this->spotRepository->create($input);
 
@@ -61,6 +90,10 @@ class SpotController extends AppBaseController
 
         return redirect(route('spots.index'));
     }
+
+    
+
+
 
     /**
      * Display the specified Spot.
@@ -116,15 +149,56 @@ class SpotController extends AppBaseController
 
         if (empty($spot)) {
             Flash::error('Spot not found');
-
             return redirect(route('spots.index'));
         }
 
-        $spot = $this->spotRepository->update($request->all(), $id);
+        $input = $request->all();
+        $image = $request->file("photo_path");
+
+        // if($request->hasFile('photo_path')){
+
+            //拡張子付きでファイル名を取得
+            $filenameWithExt = $image->getClientOriginalName();
+            
+            //ファイル名のみを取得
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+            //拡張子を取得
+            $extension = $image->getClientOriginalExtension();
+
+            //保存のファイル名を構築
+            $filenameToStore = $filename."_".time().".".$extension;
+            $path = $image->storeAs("public", $filenameToStore);
+            // $path = \Storage::put('/public', $image);
+            $path = explode('/', $path);
+        // }else{
+        //     $path = null;
+        // }
+
+
+//        $input["photo_path"]["realpath"]= $path;
+
+        // Log::alert($path);
+        // dd($path);
+
+
+        
+
+        // $path = \Strage::put('/public', $image);
+
+        // $request->photo_path = $path;
+        // dd($path);
+
+        $input["photo_path"]=$path[1];
+        // dd($input);
+        
+        $spot = $this->spotRepository->update($input, $id);
 
         Flash::success('Spot updated successfully.');
 
         return redirect(route('spots.index'));
+
+
     }
 
     /**
@@ -152,6 +226,7 @@ class SpotController extends AppBaseController
 
         return redirect(route('spots.index'));
     }
+
 
 
     // ゲストユーザー用

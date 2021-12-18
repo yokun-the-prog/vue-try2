@@ -5,7 +5,7 @@
             <v-toolbar
                 flat
             >
-                <v-toolbar-title>新しい旅の計画{{$store.state.schedule}}</v-toolbar-title>
+                <v-toolbar-title>新しい旅の計画</v-toolbar-title>
                 <v-divider
                     class="mx-4"
                     inset
@@ -25,10 +25,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
-                    
             </v-toolbar>
-
-
 
         <v-container mb-3 px-4>
             <Search />

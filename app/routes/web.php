@@ -48,19 +48,8 @@ Route::group(['middleware' => 'auth'],function(){
         // メニュー画面表示
 
     Route::get('guest', [App\Http\Controllers\HomeController::class, 'guest_index'])->name('guest.index');
-    // Route::get('logout', function(){
-
-    // });
-
-    
-    // Route::get('/spots', [App\Http\Controllers\SpotController::class, 'guest_index'])->name('guest/spots.index');
-
-    // Route::get('/tours', [App\Http\Controllers\TourController::class, 'guest_index'])->name('guest/tours.index');
-
 
 
 });
 
 
-
-//Route::get('plans', [App\Http\Controllers\PlanController::class, 'index'])->name('plans.index');

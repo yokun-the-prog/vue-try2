@@ -22,6 +22,7 @@ class SpotsTableSeeder extends Seeder
             'tel' => '0569-62-0204',
             'spot_location' => '011.111.111.111',
             'standard_term' => '30',
+            'photo_path' => '',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime()
         ]);
@@ -33,6 +34,7 @@ class SpotsTableSeeder extends Seeder
             'tel' => '0569-62-1111',
             'spot_location' => '011.111.222.111',
             'standard_term' => '60',
+            'photo_path' => '',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime()
         ]);
@@ -44,6 +46,7 @@ class SpotsTableSeeder extends Seeder
             'tel' => '0569-62-3100',
             'spot_location' => '011.111.222.111',
             'standard_term' => '30',
+            'photo_path' => '',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime()
         ]);
@@ -54,6 +57,7 @@ class SpotsTableSeeder extends Seeder
             'tel' => '0569-65-1315',
             'spot_location' => '011.111.222.111',
             'standard_term' => '120',
+            'photo_path' => '',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime()
         ]);

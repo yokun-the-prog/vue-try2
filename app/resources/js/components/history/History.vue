@@ -1,215 +1,184 @@
+
 <template>
-    <div class="historyComponent">
-        
-        <v-data-table
-            :headers="headers"
-            :items="histories"
-            item-key="id"
-            class="elevation-1"
-            hide-default-footer
-
+  <v-data-table
+    :headers="headers"
+    :items="this.$store.state.tours"
+    sort-by="id"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar
+        flat
+      >
+        <v-toolbar-title>{{$store.state.userInformation.name}}さんの旅の履歴</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog
+          v-model="dialog"
+          max-width="500px"
         >
-            <template v-slot:top>
-                <v-toolbar
-                    flat
-                >
-                    <v-toolbar-title depressed>{{$store.state.userInformation.name}}さんの旅の履歴</v-toolbar-title>
-                    <v-divider
-                        class="mx-4"
-                        inset
-                        vertical
-                    ></v-divider>
-                    <v-spacer></v-spacer>
-                    <v-dialog
-                        max-width="500px"
-                    >
-                        <template v-slot:activator="{  }">
-                            <v-btn
-                                color="primary"
-                                dark
-                                class="mb-2"
-                                :to= "to"
-                                link
-                            >新規追加
-                            </v-btn>
-                        </template>
-                    </v-dialog>
-
-
-                    <v-dialog v-model="dialogDelete" max-width="500px">
-                        <v-card>
-                            <v-card-title class="text-h5">この旅を削除しますか？</v-card-title>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                                <v-spacer></v-spacer>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                        
-                </v-toolbar>
-
-            </template>
-            <template v-slot:item.action="{ item }">
-
-                <v-icon
-                    small
-                    @click="deleteItem(item)"
-                >
-                    mdi-delete
-                </v-icon>
-            </template>
-
-        <!-- <div>
-            <v-data-table
-            :headers="headers"
-            :items="histories"
-            item-key="id"
-            class="elevation-1"
-            hide-default-footer
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                v-bind="attrs"
+                v-on="on"
+                :to= "to"
+                link
             >
-            </v-data-table>
-        </div> -->
-        </v-data-table>
+              新しい旅を計画する
+            </v-btn>
+            <div
+                hidden
+            >
+                {{$store.state.tours}}
+            </div>
+          </template>
 
-    </div>
-
+        </v-dialog>
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5">Are you sure you want to delete this tour?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <!-- <v-icon
+        small
+        class="mr-2"
+        @click="editItem(item)"
+      >
+        mdi-pencil
+      </v-icon> -->
+      <v-icon
+        small
+        @click="deleteItem(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+  </v-data-table>
 </template>
 
 
 <script>
   export default {
-    data () {
-        return {
-            dialog:false,
-            dialogDelete: false,
+    data: () => ({
+        dialog: false,
+        dialogDelete: false,
+        to:"/plan",
 
-            to:"/plan",
-            histories: [
-                {
-                    id:'1',
-                    date: '2019.12.14',
-                    depTime: null,
-                    retTime: null,
-                    spots: 'あああ',
-                },
-                {
-                    id:'2',
-                    date: '2019.12.31',
-                    depTime: null,
-                    retTime: null,
-                    spots: 'あああ',
-                },
-                {
-                    id:'3',
-                    date: null,
-                    depTime: null,
-                    retTime: null,
-                    spots: 'あああ',
-                },
-                {
-                    id:'4',
-                    date: null,
-                    depTime: null,
-                    retTime: null,
-                    spots: 'あああ',
-                },
-                {
-                    id:'5',
-                    date: null,
-                    depTime: null,
-                    retTime: null,
-                    spots: 'あああ',
-                },
-            ],
-            editedIndex: -1,
-            editedItem: {
-                id:'',
-                date: '',
-                depTime: '',
-                retTime: '',
-                spots: '',
-            },
+        headers: [
+            { text: '旅予定日', value: 'schedule' },
+            { text: '出発時刻', value: 'departure_at', sortable: false },
+            { text: '帰宅時刻', value: 'return_at', sortable: false },
+            { text: '出発地', value: 'departure_spot', sortable: false },
+            { text: '帰宅地', value: 'return_spot', sortable: false },
+            { text: '目的地一覧', value: 'allSpots', sortable: false },
+            { text: 'アクション', value: 'actions', sortable: false },
+        ],
 
-            defaultItem: {
-                id:'',
-                date: '',
-                depTime: '',
-                retTime: '',
-                spots: '',
-            },
+        editedIndex: -1,
+        editedItem: {
+            id:'',
+            schedule: '',
+            departure_at: '',
+            return_at: '',
+            departure_spot: '',
+            return_spot: '',
+            allSpots: '',
+        },
 
-        }
-    },
+        defaultItem: {
+            id:'',
+            schedule: '',
+            departure_at: '',
+            return_at: '',
+            departure_spot: '',
+            return_spot: '',
+            allSpots: '',
+        },
+    }),
+
     computed: {
-      headers () {
-        return [
-          { text: '登録日', value: 'date' },
-          { text: '出発時刻', value: 'depTime', sortable: false },
-          { text: '帰宅時刻', value: 'retTime', sortable: false },
-          { text: '目的地一覧', value: 'spots', sortable: false },
-          { text: 'アクション', value: 'action', sortable: false },
-        ]
+        formTitle () {
+            return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
       },
     },
+
+    watch: {
+        dialog (val) {
+            val || this.close()
+        },
+        dialogDelete (val) {
+            val || this.closeDelete()
+        },
+    },
+
+    created () {
+    },
+
     methods: {
 
-
-
-        editItem (item) {
-            this.editedIndex = this.histories.indexOf(item)
+        editItem: function(item) {
+            this.editedIndex = this.$store.state.tours.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
 
-        deleteItem (item) {
-            console.log('削除');
-            this.editedIndex = this.histories.indexOf(item)
-            console.log(this.editedIndex);
-
+        deleteItem: function(item) {
+            this.editedIndex = this.$store.state.tours.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            console.log(this.editedItem);
             this.dialogDelete = true
-            console.log('削除');
         },
 
-        deleteItemConfirm () {
-            this.histories.splice(this.editedIndex, 1)
+        deleteItemConfirm: function() {
+            this.$store.state.tours.splice(this.editedIndex, 1)
             this.closeDelete()
         },
 
-
-        close () {
+        close: function() {
             this.dialog = false
             this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
+            this.editedItem = Object.assign({}, this.defaultItem)
+            this.editedIndex = -1
             })
         },
 
-        closeDelete () {
+        closeDelete: function() {
             this.dialogDelete = false
             this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
+            this.editedItem = Object.assign({}, this.defaultItem)
+            this.editedIndex = -1
             })
         },
 
-        save () {
+        save: function() {
             if (this.editedIndex > -1) {
-                Object.assign(this.desserts[this.editedIndex], this.editedItem)
+            Object.assign(this.$store.state.tours[this.editedIndex], this.editedItem)
             } else {
-                this.desserts.push(this.editedItem)
+            this.$store.state.tours.push(this.editedItem)
             }
             this.close()
         },
-    //   filterOnlyCapsText (value, search, item) {
-    //     return value != null &&
-    //       search != null &&
-    //       typeof value === 'string' &&
-    //       value.toString().toLocaleUpperCase().indexOf(search) !== -1
-    //   },
+        readTours: function() {
+            this.$store.dispatch('readTours');
+        },
+    },
+    mounted() {
+        // this.readTours();
     },
 }
 </script>
@@ -219,4 +188,6 @@
         margin-bottom: 5px;
     }
 </style>
+
+
 

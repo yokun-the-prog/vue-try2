@@ -90,4 +90,44 @@ class UserController extends AppBaseController
 
         return redirect(route('admin/users.index'));
     }
+
+
+        /**
+     * Show the form for editing the specified User.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $user = $this->userRepository->find($id);
+
+        if (empty($user)) {
+            Flash::error('User not found');
+
+            return redirect(route('users.index'));
+        }
+
+        return view('admin/users.edit')->with('user', $user);
+    }
+
+    public function update($id, UpdateUserRequest $request)
+    {
+        $user = $this->userRepository->find($id);
+
+        if (empty($user)) {
+            Flash::error('User not found');
+
+            return redirect(route('users.index'));
+        }
+
+        $user = $this->userRepository->update($request->all(), $id);
+
+        Flash::success('User updated successfully.');
+
+        return redirect(route('users.index'));
+    }
+
+
 }

@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <v-card mx-4 px-4>
             <v-row>
                 <v-col cols=4>
@@ -215,11 +216,6 @@
                 </v-col>
             </v-row> 
         </v-card>
-        <v-card>
-            <div>
-                <!-- {{ $store.state.routes }} -->
-            </div>
-        </v-card>
     </div>
 
 </template>
@@ -237,7 +233,7 @@ export default {
             info: null,
             date: '',
             modal1: false, modal2: false,
-            
+            show: true,
             // 観光スポットの平均観光時間
             averageTerm: '',
             // 観光スポット間の平均移動時間
@@ -266,7 +262,7 @@ export default {
     },
     methods: {
 
-        storeTour: async function(){
+        storeTour: function(){
             const vm = this;
             var tour_id=0;
             var tourInfo = {
@@ -283,29 +279,31 @@ export default {
             axios.post("/api/tour/store", tourInfo)
                 .then(response => {
                     this.tour_id = response.data;
-                    console.log('tour_id');
-                    console.log(tour_id);
                 })
                 .then(response =>{
                     this.storeDestinations(this.tour_id);
-                });
-            
-            console.log('hello!!!');
-            
-            
-//            console.log(tour_id);
-
-
-
+                })
+                .then(response =>{
+                    this.$store.state.successShow = true;
+                    // setTimeoutで3000ms後にshowをfalseにする
+                    setTimeout(() => {
+                        this.$store.state.successShow = false}
+                        ,3000
+                    );
+                })
+                .then(response =>{
+                    this.readTours();
+                })
+                .then(response =>{
+                    this.$router.push('/history');
+            });          
         },
 
         storeDestinations: async function(tour_id){
             
             var routes = this.$store.state.routes;
             routes.forEach(routeElement =>{
-
                 var destinationsInfo={
-                    
                     "tour_id" : this.tour_id,
                     "spot_id" : routeElement.id,
                     "erratum_division_id" : 1,
@@ -316,7 +314,7 @@ export default {
                 axios.post("/api/destination/store", destinationsInfo)
                     .then(response=>{
                         console.log(response.data);
-                    });
+                });
             });
 
 
@@ -329,7 +327,6 @@ export default {
         // 検索ボタンが押されたら、設定条件に応じて最適なルートを作成する関数
         createRoute: async function(){
             
-            //this.readSpots();
 
             // Routesの初期化
             this.saveRoutes([]);
@@ -348,112 +345,67 @@ export default {
 
             // 残りの時間を算出
             var remainTime = this.totalTime - 1.2*(reqTimeFromDeparture + reqTimeToReturn);
-            console.log('spots');
-            console.log(reqTimeFromDeparture);
 
 
             // 平均観光時間（と平均移動時間）を算出
             this.averageTerm = await this.calcAverageTerm();
-            //this.averageDuration = await this.calcDurationAmongSpots();
             
 
-            console.log('averageTerm');
-            console.log(this.averageTerm);
-            console.log('averageDuration');
-            console.log(this.averageDuration);
 
-
-            console.log('あ');
             // ここから下関数化
             // 訪問できるスポット数算出
             var spotNumbers = Math.floor((remainTime + this.averageDuration) / (this.averageTerm + this.averageDuration));
             if(spotNumbers > this.$store.state.spots.length){
                 spotNumbers = this.$store.state.spots.length;
             };
-            console.log('い');
 
             // ランダムにスポットを決める
             // ランダム計算用配列
             var allSpotNumbers = [...Array(this.$store.state.spots.length).keys()];
-            console.log('allSpotNumbers');
-            console.log(allSpotNumbers);
-            console.log('SpotNumbers');
-            console.log(spotNumbers);
 
 
             var selected = this.randomSelect(allSpotNumbers.slice(), spotNumbers);
-            console.log('selected');
-            console.log(selected);
-
             selected.sort();
-            console.log('う');
 
             // 帰る場所から一番近い場所を最終訪問スポットとする
-            console.log('selected');
-            console.log(selected);
-
             var finalSpotIndex = await this.determineFinalSpot(selected);
 
             // ルート探索用の配列を作成
             const routeArray = this.makeCombination(selected, 2);
-            console.log('え');
 
             // 各移動時間を考慮して、近い順に並べる。
             const destinations = await this.chooseRoute(routeArray, finalSpotIndex, spotNumbers);
             const destinationsOpposite = destinations.slice().reverse();
-            console.log('ルート探索終了！！');
-            console.log('destinations');
-            console.log(destinations);
-            console.log('destinationsOpposite');
-            console.log(destinationsOpposite);
 
             // 出発地から0番目の訪問スポットまでの時間を計算
             var reqTimeFromDepartureSpot = await this.calcRequireTimeFromSpot(this.$store.state.departureSpot, destinationsOpposite[0].name);
 
-            console.log('reqTimeFromDepartureSpot');
-            console.log(reqTimeFromDepartureSpot);
-
             // n番目の訪問スポットから帰宅地までの時間を計算
             var reqTimeToReturnSpot = await this.calcRequireTimeFromSpot(this.$store.state.returnSpot, destinationsOpposite[spotNumbers-1].name);
-
-            console.log('reqTimeToReturnSpot');
-            console.log(reqTimeToReturnSpot);
-
 
             var previousDepartureTime = 0;
             var durationToNextSpot = 0;
             // 時間を追加していく
             destinationsOpposite.forEach((destinationElement,index)=>{
                 
-                console.log('出力するよ'+index);
                 if (index==0){
-                    console.log(this.$store.state.departureTime);
                     destinationElement['arrive_at']= this.addTimeWithMinutes(this.$store.state.departureTime, reqTimeFromDepartureSpot)
-                    console.log(destinationElement['arrive_at']);
                 }
                 else{
-                    console.log('あーあーあー');
                     destinationElement['arrive_at']= this.addTimeWithMinutes(previousDepartureTime, durationToNextSpot);
-//                    destinationElement['arrive_at']= this.parseInt(depTime) + parseInt(reqTimeFromDeparture);
                 }
 
                 destinationElement['departure_at']= this.addTimeWithMinutes(destinationElement['arrive_at'], parseInt(destinationElement['standard_term']));
                 previousDepartureTime = destinationElement['departure_at'];
                 durationToNextSpot = destinationElement['durationToNextSpot'];
-                console.log(destinationElement['departure_at']);
 
             });
             this.$store.state.timeToGoHome = this.addTimeWithMinutes(destinationsOpposite[spotNumbers-1]['departure_at'] , reqTimeToReturnSpot);
-
-            console.log('本当の帰宅時間は');
-            console.log(this.$store.state.timeToGoHome);
-
 
             this.saveRoutes(destinationsOpposite);
 
             this.$store.state.planCreateFlag = true;
 
-            console.log(this.$store.state.routes);
         },
 
         calcRequireTimeFromSpot: async function(departureSpot, returnSpot){
@@ -467,7 +419,6 @@ export default {
 
             // 行き、帰りの移動時間を算出
             const durationText = await this.pickDuration(data);
-
             const durationAmongSpots = await this.transformDuration(durationText);
             
             return durationAmongSpots;
@@ -526,9 +477,6 @@ export default {
                 });
 
                 const nextSpot = [nextSpotIndex, comparedTime];
-                console.log('nextSpotははははっはは');
-                console.log(nextSpot);
-
                 resolve(nextSpot);
 
             });
@@ -545,31 +493,18 @@ export default {
 
             // 近い順に訪問場所を決めてdestinations配列に追加していく
             var nextSpotIndex = finalSpotIndex;
-            // var durationToNextSpot = [];
             var spotNumbersArray = [...Array(spotNumbers-1).keys()];
 
-            // durationToNextSpot.push(0);
             for await (let index of spotNumbersArray) {
                 var nextSpot = await this.determineNearestSpot(routeArray, nextSpotIndex);
                 nextSpotIndex = nextSpot[0];
-//                durationToNextSpot = nextSpot[1];
 
                 destinations.push(spots[nextSpotIndex]);
                 destinations[index+1]["durationToNextSpot"]=nextSpot[1];
 
-                console.log('destinationsいいいい');
-                console.log(destinations);
 
-                // durationToNextSpot.push(nextSpot[1]);
             };       
-            // destinations.concat(durationToNextSpot);
             destinations[0]["durationToNextSpot"]=0;
-            
-            console.log('destinationsはっはは');
-            console.log(destinations);
-            // console.log('durationToNextSpotはははは');
-            // console.log(durationToNextSpot);
-
 
             return(destinations);
         },
@@ -578,17 +513,11 @@ export default {
         determineFinalSpot: async function(selected){
             let finalSpotIndex = 0;
             let durationFromFinalSpot = 100000;
-            console.log('か');
-                console.log('selected');
-                console.log(selected);
-
 
             for await (let index of selected) {
                 // URL取得
 
                 var reqTimeToReturn = await this.calcRequireTimeFromSpot(this.$store.state.spots[index].name, this.$store.state.returnSpot);
-                console.log('き');
-                console.log(reqTimeToReturn);
 
                 if(parseInt(durationFromFinalSpot) > parseInt(reqTimeToReturn)){
                     durationFromFinalSpot = parseInt(reqTimeToReturn);
@@ -617,9 +546,6 @@ export default {
                 // 全観光スポットの標準所要時間を配列に格納
                 const standardTerm = this.$store.state.spots.map( item => item.standard_term );
                 
-                console.log('this.$store.state.spots');
-                console.log(this.$store.state.spots);
-                
                 standardTerm.forEach(function (term) {
                     sum += parseInt(term);
                 });
@@ -632,7 +558,6 @@ export default {
         calcDurationAmongSpots: async function (){
             
             let sum = 0;
-            console.log('1');
             // storeのspotsから各観光スポットの住所を抜き取り配列に入れ、ルートの組み合わせを求める
             const allSpotName = this.$store.state.spots.map( item => item.name );
             var allRoutes = this.makeCombination(allSpotName, 2);
@@ -645,26 +570,19 @@ export default {
                 // directionAPIからルート情報取得
                 var response = await axios.get(url);
                 var data = response.data;
-                console.log('2');
 
                 // 所要時間のみ抜き取り実施
                 var durationText = await this.pickDuration(data);
                 var reqTime = await this.transformDuration(durationText);
                 item[2] = reqTime;
                 sum += parseInt(reqTime);
-                console.log('2.5');
 
             };
-            console.log('3');
-
             const averageDuration = ( sum / allRoutes.length );
             this.durationCombination = allRoutes;
             console.log(averageDuration);
             return averageDuration;
 
-        },
-        calcDummy: async function(){
-            console.log('Jero');
         },
 
         // コンビネーションを求める関数
@@ -860,23 +778,25 @@ export default {
             
         },
 
-        readTags() {
+        readTags:function() {
             this.$store.dispatch('readTags','');
         },
-        readSpots() {
+        readSpots: function() {
             this.$store.dispatch('readSpots','');
         },
-        saveRoutes(destinations){
+        saveRoutes: function(destinations){
             this.$store.commit('saveRoutes', destinations);
         },
+        readTours: function() {
+            this.$store.dispatch('readTours');
+        },
+
     },
     mounted() {
         this.readTags();
         this.readSpots();
         
     },
-    
-
 };
 
             // 手順
@@ -891,15 +811,3 @@ export default {
 
 </script>
 
-
-
-{"message":"The given data was invalid.",
-"errors":{
-    "user_id":["The user id field is required."],
-    "photorally_division_id":["The photorally division id field is required."],
-    "transport_division_id":["The transport division id field is required."],
-    "schedule":["The schedule field is required."],
-    "departure_spot":["The departure spot field is required."],
-    "departure_at":["The departure at field is required."],
-    "return_spot":["The return spot field is required."],
-    "return_at":["The return at field is required."]}}

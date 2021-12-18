@@ -17,18 +17,20 @@
 
         <div class="card">
 
-            {!! Form::model($spot, ['route' => ['spots.update', $spot->id], 'method' => 'patch']) !!}
+            {!! Form::model($spot, ['route' => ['spots.update', $spot->id], 'method' => 'patch', "enctype" => "multipart/form-data"]) !!}
 
             <div class="card-body">
                 <div class="row">
                     @include('admin/spots.fields')
                 </div>
-            </div>
+            </div>        
+
 
             <div class="card-footer">
                 {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
                 <a href="{{ route('spots.index') }}" class="btn btn-default">Cancel</a>
             </div>
+
 
             {!! Form::close() !!}
 

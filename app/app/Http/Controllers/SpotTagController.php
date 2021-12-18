@@ -153,4 +153,14 @@ class SpotTagController extends AppBaseController
 
         return redirect(route('spotTags.index'));
     }
+    // ゲストユーザー用
+    public function read()
+    {
+        $data = $this->spotTagRepository->all();
+        return $data;
+    }
+    
+
+
+
 }

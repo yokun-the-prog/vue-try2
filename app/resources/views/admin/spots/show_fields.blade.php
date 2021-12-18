@@ -41,3 +41,12 @@
     <p>{{ $spot->updated_at }}</p>
 </div>
 
+
+<!-- Photo Updated -->
+<div class="col-sm-12">
+    {!! Form::label('photo_path', '代表写真:') !!}<br/>
+    <!-- <img src="{{asset('public/tmp/phpSHMvLr')}}" class="w-100 mb-3"> -->
+    <img src="{{'/storage/' . $spot->photo_path}}" class="w-50 mb-3">
+    
+</div>
+

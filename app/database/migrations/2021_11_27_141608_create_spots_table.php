@@ -21,6 +21,7 @@ class CreateSpotsTable extends Migration
             $table->string('tel', 128);
             $table->string('spot_location', 250);
             $table->string('standard_term', 250);
+            $table->string('photo_path', 250);
             $table->timestamps();
             $table->softDeletes();
         });

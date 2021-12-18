@@ -160,7 +160,7 @@ class TourController extends AppBaseController
     // ゲストユーザー用
     public function guest_index(Request $request)
     {
-        $spots = $this->tourRepository-->user()->all();
+        $spots = $this->tourRepository->user()->all();
         return view('guest/tours.index')->with('tours', $spots);
     }
 
@@ -178,16 +178,37 @@ class TourController extends AppBaseController
     }
 
 
-
     public function guest_store(CreateTourRequest $request)
     {
         $input = $request->all();
 
         $tour = $this->tourRepository->create($input);
         return $tour->id;
+        // Flash::success('Tour saved successfully.');        
+    }
 
-        // Flash::success('Tour saved successfully.');
-        
+    public function read(Request $request)
+    {
+        $tours = $this->tourRepository->all(["user_id"=>$request->user_id]);
+        $destinationController = app()->make('App\Http\Controllers\DestinationController');
+
+        $result=[];
+
+        foreach($tours as $tour){
+            $spots = $destinationController->destinationRepository->all(["tour_id" => $tour->id]);
+            $allSpots = "";
+            foreach($spots as $spot){
+                $allSpots = ( $spot->spot->name . "、". $allSpots );    
+                // $allSpots = $dockingName;
+            };
+            $addInfo = array('allSpots' => $allSpots);
+            $tour2json = json_decode($tour, true);
+            array_push($result, array_replace( $tour2json , $addInfo));
+            // $tour = array_merge($tour, $tour2);
+            
+        };
+        //  return $dockingName;
+        return $result;
     }
 
 

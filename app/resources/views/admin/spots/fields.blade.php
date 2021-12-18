@@ -28,3 +28,12 @@
     {!! Form::label('standard_term', '標準観光時間:') !!}
     {!! Form::text('standard_term', null, ['class' => 'form-control']) !!}
 </div>
+
+
+<!-- Standard Term Field -->
+<div class="form-group col-sm-12">
+    {!! Form::label('photo_path', '代表写真:') !!}<br>
+    {!! Form::file('photo_path', null, ['class' => 'form-control-file']) !!}
+</div>
+
+

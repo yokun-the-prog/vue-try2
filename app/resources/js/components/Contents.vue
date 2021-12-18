@@ -1,6 +1,6 @@
 <template>
     <v-main>
-        <v-container class="py-8 px-6" fluid>
+        <v-container class="py-2 px-6" fluid>
             <div class="appComponent">
                 <div class="container">
                     <router-view />

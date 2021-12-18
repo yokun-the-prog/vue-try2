@@ -1,7 +1,5 @@
 <template>
-    <!-- v-model="drawer" -->
-    <!-- expand-on-hover -->
-    
+
   <v-navigation-drawer
     app
   >

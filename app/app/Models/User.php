@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -47,6 +48,8 @@ class User extends Authenticatable
     public function tour(){
         return $this -> hasMany(Tour::class);
     } 
-
+    public static $rules = [
+        'name' => 'required'
+    ];
 
 }

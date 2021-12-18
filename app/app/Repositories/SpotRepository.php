@@ -41,4 +41,6 @@ class SpotRepository extends BaseRepository
     {
         return Spot::class;
     }
+
+
 }
